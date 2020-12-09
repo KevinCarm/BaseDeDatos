@@ -1,5 +1,6 @@
 package com.example.basededatos
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -19,10 +20,26 @@ class MainActivity : AppCompatActivity() {
         correo = findViewById(R.id.txtCorreo)
         boton = findViewById(R.id.button)
         boton.setOnClickListener {
-            if(registra()){
-                Toast.makeText(applicationContext,
-                "Agregado correctamente",
-                Toast.LENGTH_LONG).show()
+            if (registra()) {
+                Toast.makeText(
+                    applicationContext,
+                    "Agregado correctamente",
+                    Toast.LENGTH_LONG
+                ).show()
+
+                val intent: Intent = Intent(
+                    this,
+                    ver_persona::class.java
+                ).apply {
+
+                    val persona = persona(
+                        nombre.text.toString(),
+                        apellido.text.toString(),
+                        correo.text.toString()
+                    )
+                    putExtra("persona", persona)
+                }
+                startActivity(intent)
             }
         }
     }
